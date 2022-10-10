@@ -2,14 +2,17 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import loading from "./img/loading.gif"
+import pack from "./pack"
+import BackArrow from "./img/BackArrow.png"
 
 export default function Movie() {
 
     const params = useParams()
     const [times, setTimes] = useState([])
     const [info, setInfo] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -24,6 +27,7 @@ export default function Movie() {
     function infoAdd (info, days ) {
         setInfo(info)
         setTimes(days)
+        pack.secId = info.id
     }
 
     if (times.length === 0) {
@@ -37,6 +41,7 @@ export default function Movie() {
     return (
         <>
             <Title>
+                <BackButton onClick={()=>navigate("/")}><img src={BackArrow} alt=''/></BackButton>
                 Selecione o horário
             </Title>
             <ShowTimes>
@@ -46,7 +51,7 @@ export default function Movie() {
                         <Day key={section.id}>
                             {section.showtimes.map((shows) =>
                             <Link to={`/assentos/${shows.id}`}>
-                                <Hour key={shows.id}>
+                                <Hour key={shows.id} data-identifier="hour-minute-btn">
                                     {shows.name}
                                 </Hour>
                             </Link>)
@@ -56,7 +61,7 @@ export default function Movie() {
                 )}
             </ShowTimes>
             <MovFooter>
-                {<img src={info.posterURL} alt={'Cover'}/>}
+                {<img src={info.posterURL} data-identifier="movie-img-preview" alt={'Cover'}/>}
                 {info.title}
             </MovFooter>
         </>
@@ -73,6 +78,7 @@ const Title = styled.div`
     font-size: 24px;
     color: #293845;
     border: solid 1px #DFE6ED; 
+    position: relative;
 `
 
 const ShowTimes = styled.div`
@@ -141,5 +147,18 @@ const MovFooter = styled.div`
         margin:15px;
         border:8px solid white;
         border-radius:2px;
+    }
+`
+
+const BackButton = styled.div`
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top:5px;
+    left: 10px;
+    img {
+        width: 20px;
+        height:15px;
+        cursor: pointer;
     }
 `

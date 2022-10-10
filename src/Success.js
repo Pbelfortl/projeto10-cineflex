@@ -12,29 +12,31 @@ export default function Success () {
                 Pedido feito com sucesso!
             </Title> 
             <Info>
-                <SecTitle>Filme e sessão</SecTitle>
+                <SecTitle data-identifier="movie-session-infos-reserve-finished">Filme e sessão</SecTitle>
                 {pack.movName}
                 <br/>
                 {pack.movDate} - {pack.movTime}
             
-                <SecTitle>Ingressos</SecTitle>
+                <SecTitle data-identifier="seat-infos-reserve-finished">Ingressos</SecTitle>
                 {pack.seatNames.map((N)=>
                     <>Assento:{N}<br/></>
                 )}
             
-                <SecTitle>Comprador</SecTitle>
+                <SecTitle data-identifier="buyer-infos-reserve-finished">Comprador</SecTitle>
                 Nome: {pack.name}
                 <br/>
                 cpf: {pack.cpf}
 
                 <Footer>
-                <button onClick={backHome}>Voltar pra Home</button>
+                <button onClick={backHome} data-identifier="back-to-home-btn">Voltar pra Home</button>
                 </Footer>
             </Info>
         </> 
     )
 
     function backHome () {
+        pack.seatNames = []
+        pack.ids = []
         navigate("/")
     }
 }
@@ -50,6 +52,7 @@ const Title = styled.div`
     font-size: 24px;
     color: #293845;
     border: solid 1px #DFE6ED; 
+    border-bottom:none;
     color: #247A6B;
     font-weight:700;
 `
@@ -83,7 +86,7 @@ const Info = styled.div`
     font-size:22px;
     font-weight: 400;
     color: #293845;
-    height: 694px;
+    height: 664px;
     display: flex;
     flex-direction: column;
     align-items: left;

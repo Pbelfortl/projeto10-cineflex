@@ -34,7 +34,7 @@ export default function HomePage() {
                 {items.map((item) => 
                     <Poster key={item.id} >
                         <Link to={`sessoes/${item.id}`}>
-                            <img src={item.posterURL} alt={'Cover'}/>
+                            <img src={item.posterURL} data-identifier="movie-outdoor" alt={'Cover'}/>
                         </Link>        
                     </Poster>)}
             </MoviesChart>
